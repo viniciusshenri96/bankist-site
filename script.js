@@ -1,12 +1,14 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+///////////////////////////////////////
+// Modal window
 
 const openModal = function (e) {
   e.preventDefault();
@@ -24,12 +26,50 @@ const closeModal = function () {
 
 btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
 
+// Button Scrolling
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
 
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
+  }
+});
+
+// Smooth Scrolling
+const scrollTo = function () {
+  section1.scrollIntoView({
+    behavior: 'smooth',
+  });
+};
+
+btnScrollTo.addEventListener('click', scrollTo);
+
+/////////////////////////////////////
+/// Event Delegation: Implementing Page Navigation
+
+/////////////////////////////////////
+// Page navigation
+
+// Fazer assim impactaria o desempenho, e não é uma solução limpa nesse caso,e a melhor solução é usar a delegação de eventos.
+// document.querySelectorAll('.nav__link').forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute('href');
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+// 1. Add event listener to commom parent element
+// 2. Datermine what element originated the event
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // Matching Strategy
+  if (e.target.classList.contains('nav__link')) {
+    e.preventDefault();
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
 
@@ -211,25 +251,6 @@ document.addEventListener('keydown', function (e) {
 /////////////////////////////////////
 /// Implementing Smooth Scrolling
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
-const section2 = document.querySelector('#section--2');
-const section3 = document.querySelector('#section--3');
-const navLinks = document.querySelectorAll('.nav__link');
-
-// Smooth Scrolling
-const scrollTo = function () {
-  section1.scrollIntoView({
-    behavior: 'smooth',
-  });
-
-  section2.scrollIntoView({
-    behavior: 'smooth',
-  });
-};
-
-btnScrollTo.addEventListener('click', scrollTo);
-
 // btnScrollTo.addEventListener('click', function (e) {
 //   const s1coords = section1.getBoundingClientRect();
 //   console.log(s1coords);
@@ -266,16 +287,48 @@ const h1 = document.querySelector('h1');
 
 // mouseenter é um pouco como o evento hover no CSS. Portanto ele dispara sempre que um mouse entra em um determinado elemento.
 
-const alertH1 = function (e) {
-  alert('addEventListener: Great!');
-};
+// const alertH1 = function (e) {
+//   alert('addEventListener: Great!');
+// };
 
-h1.addEventListener('mouseenter', alertH1);
+// h1.addEventListener('mouseenter', alertH1);
 
-setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+// setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
 
 // Forma antiga de usar eventos
 
 // h1.onmouseenter = function (e) {
 //   alert('addEventListener: Great!');
 // };
+
+/////////////////////////////////////
+/// Event Propagation in Practice
+
+// const randomInt = (min, max) =>
+//   Math.floor(Math.random() * (max - min + 1) + min);
+// const randomColor = () =>
+//   `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+
+// document.querySelector('.nav__link').addEventListener('click', function (e) {
+//   e.preventDefault();
+//   this.style.backgroundColor = randomColor();
+//   console.log('LINK', e.target, e.currentTarget);
+//   console.log(e.currentTarget === this);
+
+//   // Stop propagation
+//   // e.stopPropagation();
+// });
+
+// document.querySelector('.nav__links').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('CONTAINER', e.target, e.currentTarget);
+// });
+
+// document.querySelector('.nav').addEventListener(
+//   'click',
+//   function (e) {
+//     this.style.backgroundColor = randomColor();
+//     console.log('NAV', e.target, e.currentTarget);
+//   },
+//   true
+// );
