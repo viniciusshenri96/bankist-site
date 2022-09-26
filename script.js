@@ -74,6 +74,32 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 });
 
 /////////////////////////////////////
+/// Building a Tabbed Component
+
+// Tabbed component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+
+  // Guard clause
+  if (!clicked) return;
+
+  // Remove active classes
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  // Activate tab
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+/////////////////////////////////////
 /// Selecting, Creating, and Deleting Elements
 
 // console.log(document.documentElement);
@@ -283,7 +309,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 //   });
 // });
 
-const h1 = document.querySelector('h1');
+// const h1 = document.querySelector('h1');
 
 // mouseenter é um pouco como o evento hover no CSS. Portanto ele dispara sempre que um mouse entra em um determinado elemento.
 
@@ -332,3 +358,52 @@ const h1 = document.querySelector('h1');
 //   },
 //   true
 // );
+
+/////////////////////////////////////
+/// DOM Traversing
+
+const h1 = document.querySelector('h1');
+
+/*
+   Going downwards: child
+*/
+
+console.log(h1.querySelectorAll('.highlight'));
+
+// - selecionando tudo dentro do elemento pai: textos, comentarios, tags filhas
+console.log(h1.childNodes);
+
+// - seleciona só as tags, só funciona para filhos diretos
+console.log(h1.children);
+
+// - seleciona o primeiro filho do elemento pai
+h1.firstElementChild.style.color = 'white';
+// - selciona o ultimo filho do elemento pai
+h1.lastElementChild.style.color = 'blue';
+
+/*
+   Going upwards: parents
+*/
+
+// - selecionando os parentes próximos
+console.log(h1.parentNode);
+// console.log(h1.parentElement);
+
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+/*
+   Going sidewards: siblings
+*/
+
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+// Selecionando todos os irmãos
+console.log(h1.parentElement.children);
+
+[...h1.parentElement.children].forEach(el => {
+  if (el !== h1) el.style.transform = 'scale(0.5)';
+});
