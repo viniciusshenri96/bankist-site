@@ -6,6 +6,10 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const nav = document.querySelector('.nav');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
 
 ///////////////////////////////////////
 // Modal window
@@ -77,10 +81,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 /// Building a Tabbed Component
 
 // Tabbed component
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabsContent = document.querySelectorAll('.operations__content');
-
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
 
@@ -99,6 +99,40 @@ tabsContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+// Menu fade animation
+const handleHover = function (o) {
+  return function (e) {
+    if (e.target.classList.contains('nav__link')) {
+      const link = e.target;
+      const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+      const logo = link.closest('.nav').querySelector('img');
+
+      siblings.forEach(el => {
+        if (el !== link) el.style.opacity = o;
+      });
+      logo.style.opacity = o;
+    }
+  };
+};
+// const handleHover = function (e) {
+//   if (e.target.classList.contains('nav__link')) {
+//     const link = e.target;
+//     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+//     const logo = link.closest('.nav').querySelector('img');
+
+//     siblings.forEach(el => {
+//       if (el !== link) el.style.opacity = this;
+//     });
+//     logo.style.opacity = this;
+//   }
+// };
+
+// Passing "argument" into handler
+nav.addEventListener('mouseover', handleHover(0.5));
+
+nav.addEventListener('mouseout', handleHover(1));
+
 /////////////////////////////////////
 /// Selecting, Creating, and Deleting Elements
 
@@ -362,48 +396,51 @@ tabsContainer.addEventListener('click', function (e) {
 /////////////////////////////////////
 /// DOM Traversing
 
-const h1 = document.querySelector('h1');
+// const h1 = document.querySelector('h1');
 
-/*
-   Going downwards: child
-*/
+// /*
+//    Going downwards: child
+// */
 
-console.log(h1.querySelectorAll('.highlight'));
+// console.log(h1.querySelectorAll('.highlight'));
 
-// - selecionando tudo dentro do elemento pai: textos, comentarios, tags filhas
-console.log(h1.childNodes);
+// // - selecionando tudo dentro do elemento pai: textos, comentarios, tags filhas
+// console.log(h1.childNodes);
 
-// - seleciona só as tags, só funciona para filhos diretos
-console.log(h1.children);
+// // - seleciona só as tags, só funciona para filhos diretos
+// console.log(h1.children);
 
-// - seleciona o primeiro filho do elemento pai
-h1.firstElementChild.style.color = 'white';
-// - selciona o ultimo filho do elemento pai
-h1.lastElementChild.style.color = 'blue';
+// // - seleciona o primeiro filho do elemento pai
+// h1.firstElementChild.style.color = 'white';
+// // - selciona o ultimo filho do elemento pai
+// h1.lastElementChild.style.color = 'blue';
 
-/*
-   Going upwards: parents
-*/
+// /*
+//    Going upwards: parents
+// */
 
-// - selecionando os parentes próximos
-console.log(h1.parentNode);
-// console.log(h1.parentElement);
+// // - selecionando os parentes próximos
+// console.log(h1.parentNode);
+// // console.log(h1.parentElement);
 
-h1.closest('.header').style.background = 'var(--gradient-secondary)';
+// h1.closest('.header').style.background = 'var(--gradient-secondary)';
 
-/*
-   Going sidewards: siblings
-*/
+// /*
+//    Going sidewards: siblings
+// */
 
-console.log(h1.previousElementSibling);
-console.log(h1.nextElementSibling);
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
 
-console.log(h1.previousSibling);
-console.log(h1.nextSibling);
+// console.log(h1.previousSibling);
+// console.log(h1.nextSibling);
 
-// Selecionando todos os irmãos
-console.log(h1.parentElement.children);
+// // Selecionando todos os irmãos
+// console.log(h1.parentElement.children);
 
-[...h1.parentElement.children].forEach(el => {
-  if (el !== h1) el.style.transform = 'scale(0.5)';
-});
+// [...h1.parentElement.children].forEach(el => {
+//   if (el !== h1) el.style.transform = 'scale(0.5)';
+// });
+
+/////////////////////////////////////
+/// Passing Arguments to Event Handlers
