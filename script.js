@@ -188,6 +188,31 @@ headerObserver.observe(header);
 // };
 
 /////////////////////////////////////
+/// Revealing Elements on Scroll
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+
+  // Tirando o oberservador, quando não queremos mais que o evento ocorra, bom para desempenho
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(section => {
+  sectionObserver.observe(section);
+
+  section.classList.add('section--hidden');
+});
+
+/////////////////////////////////////
 /// Selecting, Creating, and Deleting Elements
 
 // console.log(document.documentElement);
