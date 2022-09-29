@@ -6,6 +6,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const section2 = document.querySelector('#section--2');
 const nav = document.querySelector('.nav');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
@@ -115,6 +116,64 @@ const handleHover = function (o) {
     }
   };
 };
+
+// Passing "argument" into handler
+nav.addEventListener('mouseover', handleHover(0.5));
+
+nav.addEventListener('mouseout', handleHover(1));
+
+/////////////////////////////////////
+/// Implementing a Sticky Navigation: The Scroll Event
+// const initialCoords = section1.getBoundingClientRect();
+// // console.log(initialCoords);
+
+// addEventListener('scroll', function () {
+//   // console.log(scrollY);
+
+//   if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+/////////////////////////////////////
+/// A Better Way: The Intersection Observer API
+
+// Essa função será chamada cada vez que o elemento observado, está cruzando o elemento raiz no limite que definimos
+// const obsCallback = function (entries, observer) {
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   });
+// };
+
+// const obsOptions = {
+//   // root é o elemento que o alvo está cruzando, escrevemos
+//   root: null,
+//   // Essa é basicamente a porcentagem de interseção no qual o callback do observador será chamado, portanto, esse retorno
+//   threshold: [0, 0.2],
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+
+// observer.observe(section1);
+
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+const stickyNav = function (entries) {
+  const [entry] = entries;
+
+  // Quando o alvo não estiver cruzando o root, adicione a classe sticky
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  // Escrevemos null porque queremos toda a janela de visualização.
+  root: null,
+  threshold: 0,
+  // É uma caixa de 90px que será aplicada fora do nosso elemento de destino, então o nosso cabeçalho.
+  rootMargin: `-${navHeight}px`,
+});
+headerObserver.observe(header);
+
 // const handleHover = function (e) {
 //   if (e.target.classList.contains('nav__link')) {
 //     const link = e.target;
@@ -127,11 +186,6 @@ const handleHover = function (o) {
 //     logo.style.opacity = this;
 //   }
 // };
-
-// Passing "argument" into handler
-nav.addEventListener('mouseover', handleHover(0.5));
-
-nav.addEventListener('mouseout', handleHover(1));
 
 /////////////////////////////////////
 /// Selecting, Creating, and Deleting Elements
