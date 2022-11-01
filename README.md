@@ -158,13 +158,13 @@ const prevSlide = function () {
 
 ## Links
 
-- [Preview Site](https://site-bankist-vinicius.netlify.app)
+- 🌎 [Preview Site](https://site-bankist-vinicius.netlify.app)
 
 &nbsp;
 
 ## My process
 
-### Built with
+### 🛠 Built with
 
 - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
 - [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
