@@ -166,13 +166,9 @@ const prevSlide = function () {
 
 ### 🛠 Built with
 
-<<<<<<< HEAD
 - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
 - [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
 - [Vanilla Js](http://vanilla-js.com)
-=======
-## 👨‍💻 Author
->>>>>>> 8e51f69077ed3fc4dd498f5aea8b7143372b1499
 
 &nbsp;
 
